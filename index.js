@@ -1,6 +1,15 @@
 const redux = require("redux");
+
+//importing middelware redux logger
+
+const reduxLogger = require("redux-logger");
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
+const applyMiddleware = redux.applyMiddleware;
+
+//creating a logger
+
+const logger = reduxLogger.createLogger();
 
 const BUY_CAKE = "BUY_CAKE"; // string constant
 const BUY_ICECREAM = "BUY_ICECREAM";
@@ -91,8 +100,8 @@ const rootReducer = combineReducers({
   iceCream: iceCreamReducer,
 });
 
-const store = createStore(rootReducer);
-console.log("initial State ", store.getState());
+const store = createStore(rootReducer, applyMiddleware(logger));
+// console.log("initial State ", store.getState());
 const unsubscribe = store.subscribe(() =>
   console.log("updated state", store.getState())
 );
